@@ -1,15 +1,56 @@
 # boggle
 
-A [Heroku](http://www.heroku.com) web app using Compojure.
+A [Boggle](http://en.wikipedia.org/wiki/Boggle) game board solver.
 
-This generated project has a few basics set up beyond the bare Compojure defaults:
+## Public Endpoint
 
-* Cookie-backed session store
-* Stack traces when in development
-* Environment-based config via [enviorn](https://github.com/weavejester/environ)
-* [HTTP-based REPL debugging](https://devcenter.heroku.com/articles/debugging-clojure) via [drawbridge](https://github.com/cemerick/drawbridge)
+http://young-atoll-6726.herokuapp.com/boggle
 
 ## Usage
+
+A true Boggle board is represented by a JSON array of 4 string, each 4 letters long. Eg:
+
+```'["abcd", "efgh" "ijkl" "mnop"]'```
+
+However, the endpoint will accept any "square" array of even length strings. Eg:
+
+```'["st", "ar"]'```
+
+This array can be POSTed to the /boggle endpoint. eg (using 2x2 board for example):
+
+    $ curl "http://young-atoll-6726.herokuapp.com/boggle" -d '["st", "ar"]' -s | python -mjson.tool
+    {   
+        "max_score": 12,
+        "words": [
+            "ars",
+            "art",
+            "ras",
+            "rat",
+            "tar",
+            "tas",
+            "sat",
+            "rats",
+            "tars",
+            "arts",
+            "tsar",
+            "star"
+        ]
+    }
+
+The result will contain all the words found in the given board, along with the maximum score of the board.
+
+*Note:* Running with a 4x4 board can take several minutes to return.  
+
+## Prequesites
+
+### [Leiningen](https://github.com/technomancy/leiningen)
+
+Version written against:
+
+    $ lein -v
+    Leiningen 2.3.4 on Java 1.6.0_51 Java HotSpot(TM) 64-Bit Server VM
+
+## Running
 
 To start a local web server for development you can either eval the
 commented out forms at the bottom of `web.clj` from your editor or
@@ -17,62 +58,11 @@ launch from the command line:
 
     $ lein run -m boggle.web
 
-Initialize a git repository for your project.
+## Testing
 
-    $ git init
-    $ git add .
-    $ git commit -m "Initial commit."
+Tests written using [midje](https://github.com/marick/Midje). To execute:
 
-You'll need the [heroku toolbelt](https://toolbelt.herokuapp.com)
-installed to manage the heroku side of your app. Once it's installed,
-get the app created:
-
-    $ heroku apps:create boggle
-    Creating boggle... done, stack is cedar
-    http://boggle.herokuapp.com/ | git@heroku.com:boggle.git
-    Git remote heroku added
-
-You can deploy the skeleton project immediately:
-
-    $ git push heroku master
-    Writing objects: 100% (13/13), 2.87 KiB, done.
-    Total 13 (delta 0), reused 0 (delta 0)
-
-    -----> Heroku receiving push
-    -----> Clojure app detected
-    -----> Installing Leiningen
-           Downloading: leiningen-2.0.0-preview7-standalone.jar
-    [...]
-    -----> Launching... done, v3
-           http://boggle.herokuapp.com deployed to Heroku
-
-    To git@heroku.com:boggle.git
-     * [new branch]      master -> master
-
-It's live! Hit it with `curl`:
-
-    $ curl http://boggle.herokuap.com
-    ["Hello" :from Heroku]
-
-The cookie-backed session store needs a session secret configured for encryption:
-
-    $ heroku config:add SESSION_SECRET=$RANDOM_16_CHARS
-
-## Remote REPL
-
-The [devcenter article](https://devcenter.heroku.com/articles/debugging-clojure)
-has a detailed explanation, but using the `repl` task from Leiningen
-2.x lets you connect a REPL to a remote process over HTTP. The first
-step is setting up credentials:
-
-    $ heroku config:add REPL_USER=[...] REPL_PASSWORD=[...]
-
-Then you can launch the REPL:
-
-    $ lein repl :connect http://$REPL_USER:$REPL_PASSWORD@myapp.herokuapp.com/repl
-
-Everything you enter will be evaluated remotely in the running dyno,
-which can be very useful for debugging or inspecting live data.
+    $ lein midje
 
 ## License
 
