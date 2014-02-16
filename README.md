@@ -39,7 +39,13 @@ This array can be POSTed to the /boggle endpoint. eg (using 2x2 board for exampl
 
 The result will contain all the words found in the given board, along with the maximum score of the board.
 
-*Note:* Running with a 4x4 board can take several minutes to return.  
+*Note:* Running with a 4x4 board can take several minutes to return. 
+
+## Dictionary
+
+All possible words are checked against a dictionary to determine if it is a valid English word.
+
+The dictionary used is the [The fourth edition of the Official SCRABBLE Players Dictionary](http://svn.pietdepsi.com/repos/projects/zyzzyva/trunk/data/words/North-American/OSPD4.txt)
 
 ## Prequesites
 
