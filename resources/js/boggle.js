@@ -28,7 +28,7 @@ $(function() {
     $('#alert-low').hide();
     var alertHigh = $('#alert-high');
     alertHigh.hide();
-    var input = $(event.target).find('input');
+    var input = $(e.target).find('input');
     var size = input.val();
     if (size == 4) {
       alertHigh.text("4 x 4 Boards wil likely time out on Heroku. Use only if running locally. (sorry)")
@@ -43,7 +43,7 @@ $(function() {
 function createRow(size) {
   var div = $('<div class="input-group">');
   var input = $('<input type="text" class="form-control col-xs-1">');
-  input.attr('size', 1);
+  input.attr('size', size - 1);
   input.attr('maxlength', size);
   div.append(input);
   return div;
