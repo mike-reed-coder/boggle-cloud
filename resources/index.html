@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Boggle Cloud</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/boggle.css">
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="col-sm-8 col-sm-offset-2">
+      <div class="panel panel-default">
+        <div class="panel-heading"> <h2>Boggle Solver</h2> </div>
+        <div class="panel-body">
+          <div class="container-fluid">
+            <div class="row">
+
+              <!-- Board creator / left column-->
+              <div class="col-sm-4">
+
+                <!-- Board size selector -->
+                <div class="marg-top-20">Choose board size:</div>
+                <div class="btn-group marg-top-10" data-toggle="buttons">
+                  <label class="btn btn-primary size-option">
+                    <input type="radio" name="options" value="2"> 2 x 2
+                  </label>
+                  <label class="btn btn-primary size-option">
+                    <input type="radio" name="options" value="3"> 3 x 3
+                  </label>
+                  <label class="btn btn-primary size-option">
+                    <input type="radio" name="options" value="4"> 4 x 4
+                  </label>
+                </div>
+
+                <!-- Board inputs -->
+                <div id="boggle-container" class="marg-top-10" style="display: none">
+                  <div id="alert-high" class="alert alert-warning marg-top-10"> </div>
+                  Enter board:
+                  <div id="boggle-board" class="marg-top-10"> </div>
+                  <div id="alert-low" class="alert alert-danger marg-top-10"> </div>
+                  <button type="button" id="solve-btn" class="btn btn-primary marg-top-10">
+                    Solve!
+                  </button>
+                </div>
+              </div>
+
+              <!-- 'Solutions' right column  -->
+              <div id="solution" class="col-sm-8" style="display: none">
+                  <h3>Solution</h3>
+                  <h4>Max Score: <span id="max-score" class="label label-success"></span></h4>
+                  <h4>Words:</h4> <div id="words" class="well"> </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="js/boggle.js"></script>
+  </body>
+</html>
+

@@ -32,11 +32,10 @@
     (handler (assoc req :content-type "application/json"))))
 
 (defroutes app-routes
-  (GET "/" []
-       {:status 200
-        :headers {"Content-Type" "text/plain"}
-        :body (pr-str ["Hello" :from 'Heroku])})
   (POST "/boggle" [:as {body :body}] (boggle/solve-board body))
+  (GET "/" [] (slurp (io/resource "index.html")))
+  (GET "/js/:js-file" [js-file] (slurp (io/resource (str "js/" js-file))))
+  (GET "/css/:css-file" [css-file] {:status 200 :headers {"content-type" "text/css"} :body (slurp (io/resource (str "css/" css-file)))})
   (ANY "*" [] (route/not-found (slurp (io/resource "404.html")))))
 
 (def app (-> #'app-routes
@@ -44,8 +43,7 @@
            (site {:session {:store (cookie/cookie-store {:key (env :session-secret)})}})
            (ring-json/wrap-json-body {:keywords? true})
            (ring-json/wrap-json-response {:keywords? true})
-           (wrap-default-content-type)
-           ))
+           (wrap-default-content-type)))
 
 (defn -main [& [port]]
   (let [port (Integer. (or port (env :port) 5000))]
